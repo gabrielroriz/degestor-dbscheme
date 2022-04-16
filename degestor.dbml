@@ -1,0 +1,56 @@
+
+Project project_name {
+  database_type: 'PostgreSQL'
+  Note: 'De Gestor'
+}
+
+Table members {
+  email string [primary key]
+  name string
+  image base64
+  is_admin boolean
+}
+
+Table group{
+  id integer [primary key]
+  projects integer [ref: < projects.id]
+}
+
+Table projects{
+  id integer [primary key]
+  body string [note: "String!"]
+}
+
+Table activity_category{
+  key string [primary key]
+  label string
+  icon base64
+  color string
+  background_color string
+}
+
+Table activity_launch_step{
+  key string [primary key]
+  label string
+}
+
+Table activity_tag{
+  key string [primary key]
+  label string
+}
+
+Table activity{
+  title varchar
+  done boolean
+  category string [ref: > activity_category.key]
+  owner string [ref: > members.email]
+  step string [ref: > activity_launch_step.key]
+  project id [ref: > projects.id]
+  drive string
+  deadline datetime
+  reviewed boolean
+  reviewer string [ref: < members.email]
+  review_deadline string
+  tags string [ref: > activity_tag.key]
+  Note: 'Atividades'
+}
